@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JamboRide Update</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+        }
+        h1 { color: #2c3e50; margin-bottom: 0.5rem; }
+        .status { font-size: 1.2rem; color: #e74c3c; font-weight: bold; }
+        .time-box {
+            margin: 20px 0;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 8px;
+            font-size: 1.1rem;
+        }
+        .joke-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .joke-button:hover { transform: scale(1.05); }
+        footer { margin-top: 20px; font-size: 0.9rem; color: #7f8c8d; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>JamboRide Status</h1>
+    <p class="status">Development Update: Delayed</p>
+    
+    <p>The JamboRide apps will be finished this <strong>Saturday</strong> and not today.</p>
+
+    <div class="time-box">
+        Current System Time:<br>
+        <span id="clock"></span>
+    </div>
+
+    <button class="joke-button" onclick="revealJoke()">Why the delay?</button>
+
+    <div id="april-fool" style="display:none; margin-top: 20px;">
+        <h2 style="color: #27ae60;">APRIL FOOLS! 🤡</h2>
+        <p>Got you! We are still on track.</p>
+    </div>
+
+    <footer>
+        Posted by: <strong>Kelvin Kachalla</strong>
+    </footer>
+</div>
+
+<script>
+    // Update the clock
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('clock').innerText = now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Reveal the joke and fire confetti
+    function revealJoke() {
+        document.getElementById('april-fool').style.display = 'block';
+        
+        // Confetti burst
+        var end = Date.now() + (2 * 1000);
+        var colors = ['#3498db', '#27ae60', '#f1c40f'];
+
+        (function frame() {
+            confetti({
+                particleCount: 3,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 },
+                colors: colors
+            });
+            confetti({
+                particleCount: 3,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 },
+                colors: colors
+            });
+
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        }());
+    }
+</script>
+
+</body>
+</html>
