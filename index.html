@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JamboRide Update</title>
+    <title>JamboRide Beta Access</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body {
@@ -26,7 +26,7 @@
             width: 90%;
         }
         h1 { color: #2c3e50; margin-bottom: 0.5rem; }
-        .status { font-size: 1.2rem; color: #e74c3c; font-weight: bold; }
+        .status { font-size: 1.2rem; color: #27ae60; font-weight: bold; }
         .time-box {
             margin: 20px 0;
             padding: 15px;
@@ -34,25 +34,30 @@
             border-radius: 8px;
             font-size: 1.1rem;
         }
-        .joke-button {
-            background: #3498db;
+        .test-button {
+            background: #27ae60;
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 15px 30px;
             border-radius: 25px;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
         }
-        .joke-button:hover { transform: scale(1.05); }
-        footer { margin-top: 20px; font-size: 0.9rem; color: #7f8c8d; }
+        .test-button:hover { 
+            background: #219150;
+            transform: scale(1.05); 
+        }
+        footer { margin-top: 30px; font-size: 0.9rem; color: #7f8c8d; border-top: 1px solid #eee; padding-top: 15px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>JamboRide Status</h1>
-    <p class="status">Development Update: Delayed</p>
+    <h1>JamboRide</h1>
+    <p class="status">Development Update: Ready</p>
     
     <p>The JamboRide apps will be finished this <strong>Saturday</strong> and not today.</p>
 
@@ -61,11 +66,11 @@
         <span id="clock"></span>
     </div>
 
-    <button class="joke-button" onclick="revealJoke()">Why the delay?</button>
+    <button class="test-button" onclick="revealJoke()">Click to test the app</button>
 
-    <div id="april-fool" style="display:none; margin-top: 20px;">
-        <h2 style="color: #27ae60;">APRIL FOOLS! 🤡</h2>
-        <p>Got you! We are still on track.</p>
+    <div id="april-fool" style="display:none; margin-top: 25px; border: 2px dashed #e74c3c; padding: 15px; border-radius: 10px;">
+        <h2 style="color: #e74c3c;">APRIL FOOLS! 🤡</h2>
+        <p>Got you! Just finishing up some final touches.</p>
     </div>
 
     <footer>
@@ -87,29 +92,25 @@
         document.getElementById('april-fool').style.display = 'block';
         
         // Confetti burst
-        var end = Date.now() + (2 * 1000);
-        var colors = ['#3498db', '#27ae60', '#f1c40f'];
+        var duration = 3 * 1000;
+        var animationEnd = Date.now() + duration;
+        var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
-        (function frame() {
-            confetti({
-                particleCount: 3,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0 },
-                colors: colors
-            });
-            confetti({
-                particleCount: 3,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1 },
-                colors: colors
-            });
+        function randomInRange(min, max) {
+          return Math.random() * (max - min) + min;
+        }
 
-            if (Date.now() < end) {
-                requestAnimationFrame(frame);
-            }
-        }());
+        var interval = setInterval(function() {
+          var timeLeft = animationEnd - Date.now();
+
+          if (timeLeft <= 0) {
+            return clearInterval(interval);
+          }
+
+          var particleCount = 50 * (timeLeft / duration);
+          confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+          confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+        }, 250);
     }
 </script>
 
